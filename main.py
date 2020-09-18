@@ -8,8 +8,10 @@ def day_and_week_file_read(flag):  # Функция для обработки д
     week = int(datetime.now().strftime("%V")) % 2  # 1 - чётная 0 - не чётная
     if flag:
         day = day + timedelta(days=1)
-        if day.day == 7:
+        if day.day % 7 == 0:
             week = (int(datetime.now().strftime("%V")) + 1) % 2  # 1 - чётная 0 - не чётная
+
+    print(day.day, week)
 
     if week == 0:
         file_open = open('timetable/0/' + day.strftime('%A'), encoding='utf-8')
@@ -41,10 +43,16 @@ def start_message(message):  # Функция для отправки приве
     # Отправляем сообщение и показываем клаву
 
 
+@bot.message_handler(commands=['help'])
+def start_message(message):
+    pass
+
+
 @bot.message_handler(content_types=['text'])  # При любом сообщении
 def send_text(message):
     if message.text.lower() == 'сегодня':  # Если в сообщение есть "сегодня" делаем
         flag = False
+
         bot.send_message(message.chat.id, 'Расписание на сегодня\n' + day_and_week_file_read(flag),
                          reply_markup=keyboard1)
     elif message.text.lower() == 'завтра':
