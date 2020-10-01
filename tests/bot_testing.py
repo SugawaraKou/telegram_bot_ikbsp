@@ -12,6 +12,7 @@ def start_message(message):
     bot.send_message(message.chat.id, 'Привет, ты написал мне /start')
 
 
+
 @bot.message_handler(commands=['art'])
 def images(message):
     bot.send_photo(message.chat.id, photo=open('images/1.jpg', 'rb'))
